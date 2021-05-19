@@ -9,13 +9,13 @@ class User < ApplicationRecord
   validates :email, :username, presence: true
   validates :email, :username, uniqueness: true
 
-  attr_accessor :password
-  validates :password, on: :create
-  validates :password
 
-  validates :username, maximum: 40
-  validates :email, with: URI::MailTo::EMAIL_REGEXP
-  validates :username, format: { with: /\A[a-z0-9_]+\Z/}
+  attr_accessor :password
+  validates :password, presence: true
+  validates :password, confirmation: true
+
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :username, format: { with: /\A[a-z0-9_]+\Z/ }
 
   before_save :encrypt_password
 
@@ -32,7 +32,6 @@ class User < ApplicationRecord
   def self.hash_to_string(password_hash)
     password_hash.unpack('H*')[0]
   end
-
   def self.authenticate(email, password)
     user = find_by(email: email)
     if user.present? && user.password_hash == User.hash_to_string(OpenSSL::PKCS5.pbkdf2_hmac(password, user.password_salt, ITERATIONS, DIGEST.length, DIGEST))
