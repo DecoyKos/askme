@@ -15,6 +15,7 @@ class User < ApplicationRecord
 
   validates :username, maximum: 40
   validates :email, with: URI::MailTo::EMAIL_REGEXP
+  validates :username, format: { with: /\A[a-z0-9_]+\Z/}
 
   before_save :encrypt_password
 
