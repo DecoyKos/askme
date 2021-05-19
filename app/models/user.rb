@@ -15,9 +15,10 @@ class User < ApplicationRecord
   validates :password, confirmation: true
 
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :username, format: { with: /\A[a-z0-9_]+\Z/ }
+  validates :username, format: { with: /\A[a-zA-Z0-9_]+\Z/ }
 
   before_save :encrypt_password
+  before_save :downcase_username
 
   def encrypt_password
     if self.password.present?
@@ -39,5 +40,9 @@ class User < ApplicationRecord
     else
       nil
     end
+  end
+
+  def downcase_username
+    self.username.downcase!
   end
 end
