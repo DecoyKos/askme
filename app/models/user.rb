@@ -22,7 +22,7 @@ class User < ApplicationRecord
   def self.hash_to_string(password_hash)
     password_hash.unpack('H*')[0]
   end
-  
+
   private
   def self.authenticate(email, password)
     user = find_by(email: email)
