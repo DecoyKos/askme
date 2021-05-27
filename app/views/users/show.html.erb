@@ -57,7 +57,16 @@
   <div class="user-questions buffer-both">
     <div class="text-medium text-center">
       <%= "#{@questions.count} #{declination(@questions.count, "вопрос", "вопроса", "вопросов")}:" %>
+        <div>
+        <%= "#{@answers.count} отвеченных #{declination(@answers.count, "вопрос", "вопроса", "вопросов")}" %>
+        </div>
+        <% unans_quest = @questions.count - @answers.count %>
+        <div>
+        <%= "#{unans_quest} неотвеченных #{declination(unans_quest, "вопрос", "вопроса", "вопросов")}" %>
+        </div>
     </div>
+    </div>
+
     <div class="questions-list">
       <%# Обратите внимание, как мы делаем цикл по всем вопросам, точно %>
       <%# также, как мы делали циклы в ruby %>

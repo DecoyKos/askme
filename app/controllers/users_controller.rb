@@ -29,6 +29,8 @@ class UsersController < ApplicationController
       Question.new(text: 'How u doin?', created_at: Date.parse('20.05.2021')),
       Question.new(text: 'wazap?', created_at: Date.parse('20.05.2021'))
     ]
+    @answers = [
+    ]
     @new_question = Question.new
   end
 end
