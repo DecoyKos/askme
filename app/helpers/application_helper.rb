@@ -15,4 +15,9 @@ module ApplicationHelper
     return enotov if (5..9).include?(modulo)
     return enotov
   end
+
+  def fa_icon(icon_class)
+    content_tag 'span', '', class: "fa fa-#{icon_class}"
+  end
 end
+

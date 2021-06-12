@@ -1,36 +1,55 @@
 class UsersController < ApplicationController
+  before_action :load_user, except: [:new, :index, :create]
+  before_action :authorize_user, except: [:new, :index, :create, :show]
+
   def index
-    @users = [
-      User.new(
-        id: 1,
-        name: 'Vadim',
-        username: 'installero',
-        avatar_url: 'https://secure.gravatar.com/avatar/' \
-          '71269686e0f757ddb4f73614f43ae445?s=100'
-      ),
-      User.new(id: 2, name: 'Misha', username: 'aristofun')
-    ]
+    @users = User.all
   end
 
   def new
+    redirect_to root_url, alert: 'Вы уже залогинены' if current_user.present?
+    @user = User.new
+  end
+
+  def create
+    redirect_to root_url, alert: 'Вы уже залогинены' if current_user.present?
+    @user = User.new(user_params)
+
+    if @user.save
+      redirect_to root_url, notice: 'Пользователь успешно зарегистрирован'
+    else
+      render 'new'
+    end
   end
 
   def edit
   end
 
-  def show
-    @user = User.new(
-      name: 'Vadim',
-      username: 'installero',
-      avatar_url: 'https://static.boredpanda.com/blog/wp-content/uploads/2017/11/My-most-popular-pic-since-I-started-dog-photography-5a0b38cbd5e1e__880.jpg',
-    )
+  def update
+    if @user.update(user_params)
+      redirect_to user_path(@user), notice: 'Данные обновлены'
+    else
+      render 'edit'
+    end
+  end
 
-    @questions = [
-      Question.new(text: 'How u doin?', created_at: Date.parse('20.05.2021')),
-      Question.new(text: 'wazap?', created_at: Date.parse('20.05.2021'))
-    ]
-    @answers = [
-    ]
-    @new_question = Question.new
+  def show
+    @questions = @user.questions.order(created_at: :desc)
+
+    @new_questions = @user.questions.build
+  end
+
+  private
+
+  def authorize_user
+    reject_user unless @user == current_user
+  end
+
+  def load_user
+    @user ||= User.find params[:id]
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation, :name, :username, :avatar_url)
   end
 end
