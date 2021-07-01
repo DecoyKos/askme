@@ -38,6 +38,14 @@
         <%= f.text_field :avatar_url, class: 'form-text-field' %>
       </div>
 
+      <div class="form-field">
+        <%= f.label 'Цвет поля Вашей аватарки.', class: 'form-label' %>
+        <%= f.label 'Зеленый', class: 'form-label' %>
+        <%= f.radio_button :avatar_color, 1 %>
+        <%= f.label 'Оранжевый', class: 'form-label' %>
+        <%= f.radio_button :avatar_color, 2 %>
+      </div>
+
       <div class="buffer-top-large buffer-bottom">
         Если не хотите менять пароль — оставьте эти поля пустыми!
       </div>
@@ -54,6 +62,10 @@
 
       <div class="form-action buffer-top">
         <%= f.submit 'Сохранить', class: 'button button-dark button-small' %>
+      </div>
+
+      <div class="form-action buffer-top">
+        <%= link_to "Удалить страницу", delete_path %>
       </div>
     <% end %>
 

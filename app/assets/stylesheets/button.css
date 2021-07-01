@@ -30,3 +30,7 @@
     padding: 7px 15px;
 }
 
+.button-red {
+    background: darkred;
+    color: #fff;
+}

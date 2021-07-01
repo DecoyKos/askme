@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :load_user, except: [:new, :index, :create]
-  before_action :authorize_user, except: [:new, :index, :create, :show]
+  before_action :load_user, except: [:new, :index, :create, :destroy]
+  before_action :authorize_user, except: [:new, :index, :create, :delete, :show]
 
   def index
     @users = User.all
@@ -34,6 +34,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+
+    @user = User.find(params[:id])
+    @user.destroy
+    session[:user_id] = nil
+    redirect_to index_user_path, notice: 'Вы удалили свою страницу. Очень жаль:('
+  end
+
   def show
     @questions = @user.questions.order(created_at: :desc)
 
@@ -54,6 +62,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :name, :username, :avatar_url)
+    params.require(:user).permit(:email, :password, :password_confirmation, :name, :username, :avatar_url, :avatar_color)
   end
 end

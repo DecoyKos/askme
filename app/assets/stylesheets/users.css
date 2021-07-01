@@ -9,8 +9,16 @@
   color: white;
 }
 
-.user-header a {
-  color: white;
+.user-avatar-color {
+    background: #005a55;
+    color: white;
+
+}
+
+.user-avatar-color1 {
+    background: bisque;
+    color: #005a55;
+
 }
 
 .user-image-div {

@@ -2,13 +2,17 @@
 <%# страницы пользователя, которая будет показана по адресу /users/1 %>
 
 <%# Блок с информацией о пользователей %>
-<div class="user-header text-center">
+<% if @user.avatar_color == 2 %>
+  <div class="user-header text-center user-avatar-color1">
+<% else %>
+  <div class="user-header text-center user-avatar-color">
+<% end %>
   <h1 class="title-medium">
     <%# Выводим имя пользователя %>
     <%= @user.name %>
   </h1>
 
-  <div class="buffer_both">
+  <div class="buffer-both">
     <%= link_to 'Редактировать профиль', edit_user_path(@user) if current_user == @user %>
   </div>
 

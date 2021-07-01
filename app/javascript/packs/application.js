@@ -7,13 +7,8 @@ import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
+import '../js/application'
 
 Rails.start()
 ActiveStorage.start()
 
-$(function(){
-    $('#ask-button').click(function(){
-        $('#ask-form').slideToggle(300);
-        return false;
-    });
-});
